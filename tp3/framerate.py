@@ -5,21 +5,29 @@
 #
 import sys
 import cv2
-if(len(sys.argv)>1):
-    filename = sys.argv[1]
-else:
-    print('Ingrese un nombre de archivo') #si no se pasa parametro muestra este mensaje
-    sys.exit(0)
+##if(len(sys.argv)>1):
+##    filename = sys.argv[1]
+##else:
+##    print('Ingrese un nombre de archivo') #si no se pasa parametro muestra este mensaje
+##    sys.exit(0)
+
+filename = "video.mp4"
 
 cap = cv2.VideoCapture(filename)
 
-fourcc =cv2.VideoWriter_fourcc('X','V','I','D')
+fourcc =cv2.VideoWriter_fourcc(*'X264')
 
-framesize = (640,480) #tamagno de video forzado
+framesize = (int(cap.get(3)),int(cap.get(4))) #obtiene el ancho y alto del video
 
-out = cv2.VideoWriter('output.avi',fourcc,20.0,framesize) #archivo de salida
 
-delay = 33 #delay para framerate
+print("Dimensiones:",framesize[0],"x",framesize[1])
+
+framerate = (int(cap.get(5)))
+print(framerate, "fps")
+
+out = cv2.VideoWriter('output.mp4',fourcc,framerate,framesize) #archivo de salida
+
+delay = int(1000/framerate) #delay para framerate obtenido
 
 while(cap.isOpened()):
     ret, frame = cap.read()
