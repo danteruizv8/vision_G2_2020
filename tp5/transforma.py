@@ -55,7 +55,7 @@ def load(imagen,angle=0,tx=0,ty=0):
                 desty = int(desty)
                 
                 if ((desty < ancho) and (destx < alto) and (desty > 0)and(destx > 0)):
-                                destino[destx,desty,k]=imagen[i,j,k]
+                                destino[i,j,k]=imagen[destx,desty,k]
 
     cv2.imshow('transformada',destino)
     cv2.imwrite('imagen_transformada.png',destino )
